@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cyril Quilit - Portfolio</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom Dark CSS -->
+    <style>
+        :root {
+            --brand-primary: #38bdf8;       /* Bright Accent Blue */
+            --brand-primary-hover: #0ea5e9; 
+            --bg-dark: #0f172a;            /* Main Dark Background */
+            --bg-card: #1e293b;            /* Card & Section Background */
+            --bg-card-alt: #334155;        /* Secondary Dark / Border */
+            --text-light: #f8fafc;         /* Main Light Text */
+            --text-muted: #94a3b8;         /* Subtitle / Muted Text */
+        }
+
+        /* Base Dark Styling */
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            scroll-behavior: smooth;
+        }
+
+        /* Dark Navbar */
+        .navbar {
+            background-color: rgba(15, 23, 42, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--bg-card-alt);
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 600;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--brand-primary) !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
+                        url('1080by1020.png') no-repeat center center/cover;
+            height: 100vh;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        /* Custom Buttons */
+        .btn-primary {
+            background-color: var(--brand-primary);
+            border-color: var(--brand-primary);
+            color: #0f172a;
+            padding: 10px 24px;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--brand-primary-hover);
+            border-color: var(--brand-primary-hover);
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        /* Sections Background */
+        #about, #skills {
+            background-color: var(--bg-dark);
+        }
+
+        #projects {
+            background-color: #131c31; /* Slight variation for section contrast */
+        }
+
+        /* About Image Wrapper */
+        .about-img {
+            border: 2px solid var(--bg-card-alt);
+        }
+
+        /* Cards Styling */
+        .project-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--bg-card-alt);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--brand-primary);
+        }
+
+        .project-card img {
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .project-card img:hover {
+            opacity: 0.9;
+        }
+
+        /* Lightbox Modal Customization */
+        .modal-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--bg-card-alt);
+            color: var(--text-light);
+            border-radius: 12px;
+        }
+
+        .modal-header, .modal-footer {
+            border-color: var(--bg-card-alt);
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        /* Skills Progress Bars (Static Widths) */
+        .skills-bar {
+            background-color: var(--bg-card-alt);
+            border-radius: 20px;
+            height: 22px;
+            overflow: hidden;
+        }
+
+        .skills-bar .progress-bar {
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        /* Contact Section Enhancements */
+        #contact {
+            background-color: #131c31;
+        }
+
+        .contact-info-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--bg-card-alt);
+            border-radius: 12px;
+            padding: 24px;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-info-card:hover {
+            border-color: var(--brand-primary);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--brand-primary);
+            background: rgba(56, 189, 248, 0.1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .contact-form-wrapper {
+            background-color: var(--bg-card);
+            border: 1px solid var(--bg-card-alt);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        #contact .form-control {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--bg-card-alt);
+            color: var(--text-light);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        #contact .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        #contact .form-control:focus {
+            background-color: var(--bg-dark);
+            border-color: var(--brand-primary);
+            color: var(--text-light);
+            box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25);
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #0b1120;
+            border-top: 1px solid var(--bg-card-alt);
+            color: var(--text-muted);
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--brand-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Dark Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Cyril Quilit</a>
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#hero">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+   <!-- Hero Section -->
+<section id="hero" class="hero d-flex align-items-center" style="background-image: url('1080by1020.png'); background-size: cover; background-position: center; position: relative;">
+    
+    <!-- Optional: Dark overlay para lumitaw ang teksto kung sakaling maliwanag ang image -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
+
+    <div class="container text-center text-white" style="position: relative; z-index: 1;">
+        <h1>Hello, I'm <span style="color: var(--brand-primary);">Cyril Quilit</span></h1>
+        <p class="mb-4">I'm a passionate web developer who creates modern, responsive websites and applications.</p>
+        <a href="#projects" class="btn btn-primary btn-lg">View My Work</a>
+    </div>
+</section>
+
+   <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-3 text-white">About Me</h2>
+                    <p class="lead" style="color: var(--text-muted);">
+                        Hello! I'm <span class="text-white fw-bold">Cyril Quilit</span>, a 2-year Electronics Information Technology (EIT) graduate who turned a deep passion for technology into web development.
+                    </p>
+                    <p style="color: var(--text-muted);">
+                        After completing my EIT degree, I decided to further expand my technical skill set by taking an intensive full stack web development course online. This allowed me to master building modern websites and web applications from the front-end to the back-end.
+                    </p>
+                    <p style="color: var(--text-muted);">
+                        Combined with my solid technical foundation and continuous drive for learning, I am eager to deliver high-quality and effective digital solutions for my upcoming projects and clients.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="600by400.png" class="img-fluid rounded-3 shadow about-img" alt="About Me Image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-5">
+        <div class="container py-4">
+            <h2 class="text-center fw-bold mb-5 text-white">Featured Projects</h2>
+            <div class="row g-4">
+                
+                <!-- Project 1 -->
+                <div class="col-md-4">
+                    <div class="card project-card h-100">
+                        <img src="2.jpg" class="card-img-top" alt="CSS Project" data-bs-toggle="modal" data-bs-target="#projectModal1">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold text-white">CSS Project</h5>
+                            <p class="card-text" style="color: var(--text-muted);">A responsive front-end project combining custom CSS styling with clean, modern HTML structure.</p>
+                            <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#projectModal1">View Project</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="col-md-4">
+                    <div class="card project-card h-100">
+                        <img src="3.jpg" class="card-img-top" alt="Ninong's Fleet" data-bs-toggle="modal" data-bs-target="#projectModal2">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold text-white">Ninong's Fleet</h5>
+                            <p class="card-text" style="color: var(--text-muted);">A sleek motorcycle dealership platform featuring a gold-and-black urban aesthetic.</p>
+                            <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#projectModal2">View Project</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="col-md-4">
+                    <div class="card project-card h-100">
+                        <img src="4.jpg" class="card-img-top" alt="Digital Bouquet" data-bs-toggle="modal" data-bs-target="#projectModal3">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold text-white">Digital Bouquet</h5>
+                            <p class="card-text" style="color: var(--text-muted);">A creative HTML/CSS/JS project featuring custom audio, vector florals, and animations.</p>
+                            <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#projectModal3">View Project</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modals Section -->
+    
+    <!-- Modal 1 -->
+    <div class="modal fade" id="projectModal1" tabindex="-1" aria-labelledby="projectModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="projectModal1Label">CSS Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="2.jpg" class="img-fluid rounded-3 mb-3 w-100 object-fit-cover" style="max-height: 400px;" alt="CSS Project Preview">
+                    <h6 class="text-white fw-bold">Overview</h6>
+                    <p style="color: var(--text-muted);">A responsive front-end development project built with semantic HTML5 and custom CSS. Focused on modern layout patterns, CSS Grid, Flexbox, and cross-browser compatibility.</p>
+                    <h6 class="text-white fw-bold">Technologies Used</h6>
+                    <span class="badge bg-primary text-dark me-1">HTML5</span>
+                    <span class="badge bg-info text-dark me-1">CSS3</span>
+                    <span class="badge bg-secondary me-1">Responsive Design</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
+                    <a href="https://cydevs.github.io/CSSPROJECT2/" class="btn btn-primary" target="_blank">Live Demo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="projectModal2" tabindex="-1" aria-labelledby="projectModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="projectModal2Label">Ninong's Fleet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="3.jpg" class="img-fluid rounded-3 mb-3 w-100 object-fit-cover" style="max-height: 400px;" alt="Ninong's Fleet Preview">
+                    <h6 class="text-white fw-bold">Overview</h6>
+                    <p style="color: var(--text-muted);">A sleek motorcycle dealership platform featuring a striking gold-and-black urban aesthetic. Designed to highlight high-end inventory, specifications, and a streamlined contact mechanism for potential buyers.</p>
+                    <h6 class="text-white fw-bold">Technologies Used</h6>
+                    <span class="badge bg-primary text-dark me-1">HTML5</span>
+                    <span class="badge bg-info text-dark me-1">Bootstrap</span>
+                    <span class="badge bg-warning text-dark me-1">JavaScript</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
+                    <a href="https://cydevs.github.io/JS-PROJECT/" class="btn btn-primary" target="_blank">Live Demo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal fade" id="projectModal3" tabindex="-1" aria-labelledby="projectModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="projectModal3Label">Digital Bouquet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="4.jpg" class="img-fluid rounded-3 mb-3 w-100 object-fit-cover" style="max-height: 400px;" alt="Digital Bouquet Preview">
+                    <h6 class="text-white fw-bold">Overview</h6>
+                    <p style="color: var(--text-muted);">A creative interactive web project featuring custom-triggered audio playback, vector floral animations, and dynamic element rendering driven by vanilla JavaScript.</p>
+                    <h6 class="text-white fw-bold">Technologies Used</h6>
+                    <span class="badge bg-primary text-dark me-1">HTML5</span>
+                    <span class="badge bg-warning text-dark me-1">JavaScript</span>
+                    <span class="badge bg-danger me-1">CSS Animations</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
+                    <a href="https://cydevs.github.io/Flowers/" class="btn btn-primary" target="_blank">Live Demo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-5">
+        <div class="container py-4">
+            <h2 class="text-center fw-bold mb-5 text-white">Technical Skills</h2>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <h5 class="fw-semibold text-white">HTML</h5>
+                    <div class="progress skills-bar mb-4">
+                        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%;" aria-valuenow="90"
+                            aria-valuemin="0" aria-valuemax="100">90%</div>
+                    </div>
+
+                    <h5 class="fw-semibold text-white">CSS</h5>
+                    <div class="progress skills-bar mb-4">
+                        <div class="progress-bar bg-info text-dark progress-bar-striped progress-bar-animated" role="progressbar" style="width: 85%;" aria-valuenow="85"
+                            aria-valuemin="0" aria-valuemax="100">85%</div>
+                    </div>
+
+                    <h5 class="fw-semibold text-white">JavaScript</h5>
+                    <div class="progress skills-bar mb-4">
+                        <div class="progress-bar bg-warning text-dark progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%;" aria-valuenow="75"
+                            aria-valuemin="0" aria-valuemax="100">75%</div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h5 class="fw-semibold text-white">Bootstrap</h5>
+                    <div class="progress skills-bar mb-4">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 80%; background-color: var(--brand-primary); color: #0f172a;" aria-valuenow="80"
+                            aria-valuemin="0" aria-valuemax="100">80%</div>
+                    </div>
+
+                    <h5 class="fw-semibold text-white">PHP</h5>
+                    <div class="progress skills-bar mb-4">
+                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 70%;" aria-valuenow="70"
+                            aria-valuemin="0" aria-valuemax="100">70%</div>
+                    </div>
+
+                    <h5 class="fw-semibold text-white">MySQL</h5>
+                    <div class="progress skills-bar mb-4">
+                        <div class="progress-bar bg-secondary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 65%;" aria-valuenow="65"
+                            aria-valuemin="0" aria-valuemax="100">65%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container py-4">
+            <h2 class="text-center fw-bold mb-2 text-white">Get In Touch</h2>
+            <p class="text-center mb-5" style="color: var(--text-muted);">Have a project in mind or want to collaborate? Feel free to reach out!</p>
+            
+            <div class="row g-4 align-items-stretch">
+                <!-- Left: Contact Details -->
+                <div class="col-lg-4 d-flex flex-column justify-content-between">
+                    <div class="contact-info-card mb-3">
+                        <div class="contact-icon">📧</div>
+                        <h5 class="text-white fw-bold">Email</h5>
+                        <p class="mb-0" style="color: var(--text-muted);">cyrilquilit@gmail.com</p>
+                    </div>
+                    <div class="contact-info-card mb-3">
+                        <div class="contact-icon">📍</div>
+                        <h5 class="text-white fw-bold">Location</h5>
+                        <p class="mb-0" style="color: var(--text-muted);">Santa Rosa, Laguna, Philippines</p>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-icon">💼</div>
+                        <h5 class="text-white fw-bold">Freelance</h5>
+                        <p class="mb-0" style="color: var(--text-muted);">Available for work</p>
+                    </div>
+                </div>
+
+                <!-- Right: Contact Form -->
+                <div class="col-lg-8">
+                    <div class="contact-form-wrapper h-100">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label fw-semibold text-white">Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label fw-semibold text-white">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label fw-semibold text-white">Subject</label>
+                                <input type="text" class="form-control" id="subject" placeholder="Project Inquiry">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="form-label fw-semibold text-white">Message</label>
+                                <textarea class="form-control" id="message" rows="5" placeholder="Tell me about your project..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 py-3">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer py-4">
+        <div class="container text-center text-md-start">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h5 class="text-white fw-bold mb-1">Cyril Quilit</h5>
+                    <p class="mb-0 small" style="color: var(--text-muted);">Building modern web experiences, one project at a time.</p>
+                </div>
+                <div class="col-md-6 text-md-end footer-links">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item me-3"><a href="#hero">Home</a></li>
+                        <li class="list-inline-item me-3"><a href="#about">About</a></li>
+                        <li class="list-inline-item me-3"><a href="#projects">Projects</a></li>
+                        <li class="list-inline-item me-3"><a href="#skills">Skills</a></li>
+                        <li class="list-inline-item"><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-3" style="border-color: var(--bg-card-alt);">
+            <div class="text-center small" style="color: var(--text-muted);">
+                &copy; 2026 Cyril Quilit. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
